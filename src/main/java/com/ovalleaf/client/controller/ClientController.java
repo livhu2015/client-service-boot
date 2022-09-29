@@ -1,7 +1,9 @@
 package com.ovalleaf.client.controller;
 
 import com.ovalleaf.client.dto.ClientDto;
+import com.ovalleaf.client.model.ClientEntity;
 import com.ovalleaf.client.service.ClientService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import java.util.Map;
 /**
  * REST API that allows for creating, updating and searching for a client.
  */
+@Slf4j
 @RestController
 public class ClientController {
     @Qualifier("clientService")
@@ -27,19 +30,27 @@ public class ClientController {
     }
 
     @PostMapping("/create")
-    ResponseEntity<String> create(@Valid @RequestBody ClientDto createClient) {
-        String response = clientService.createClient(createClient);
+    ResponseEntity<ClientEntity> create(@Valid @RequestBody ClientDto createClient) throws Exception{
+        ClientEntity response = clientService.createClient(createClient);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/update")
-    ResponseEntity<String> update(@RequestBody String updateClient){
-        return null;
+    @PutMapping("/update")
+    ResponseEntity<ClientEntity> update(@RequestParam String idNumber, @RequestBody ClientDto updateClient) throws Exception {
+        ClientEntity response = clientService.updateClient(idNumber, updateClient);
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/search")
-    ResponseEntity<String> search(@RequestBody String searchClient){
-        return null;
+    /**
+     * You should be able to search for a client using any one of the following fields FirstName or ID  Number or Phone Number
+     * @param firstName
+     * @return
+     */
+    @GetMapping("/search")
+    ResponseEntity<ClientEntity> search(@RequestParam String firstName,
+                                        @RequestParam String mobileNumber, @RequestParam String idNumber) throws Exception {
+        ClientEntity response = clientService.searchClient(firstName, mobileNumber, idNumber);
+        return ResponseEntity.ok(response);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

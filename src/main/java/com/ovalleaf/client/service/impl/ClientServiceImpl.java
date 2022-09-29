@@ -19,7 +19,7 @@ public class ClientServiceImpl implements ClientService {
      * @return
      */
     @Override
-    public String createClient(ClientDto createClient) {
+    public ClientEntity createClient(ClientDto createClient) {
         ClientEntity clientEntity = ClientEntity.builder()
                 .firstName(createClient.getFirstName())
                 .lastName(createClient.getLastName())
@@ -28,9 +28,47 @@ public class ClientServiceImpl implements ClientService {
                 .physicalAddress(createClient.getPhysicalAddress())
                 .build();
 
-        ClientEntity s = clientRepository.save(clientEntity);
-        log.info("Client created |-> " + s);
+        ClientEntity createdClient = clientRepository.save(clientEntity);
+        log.info("Client created |-> " + createdClient);
 
-        return "client created: " + s;
+        return createdClient;
+    }
+
+    /**
+     * @param firstName
+     * @return
+     */
+    @Override
+    public ClientEntity searchClient(String firstName, String mobileNumber, String idNumber) throws Exception {
+        ClientEntity clientResponse = clientRepository.findByFirstNameOrMobileNumberOrIdNumber(firstName, mobileNumber, idNumber);
+        if (clientResponse == null) {
+            throw new Exception("Client not Found");
+        }
+        log.info("Found client: "+ clientResponse.toString());
+        return clientResponse;
+    }
+
+    /**
+     * @param updateClient
+     * @return
+     */
+    @Override
+    public ClientEntity updateClient(String idNumber, ClientDto updateClient) throws Exception {
+        ClientEntity client = clientRepository.findByIdNumber(idNumber);
+
+        log.info("Found client: " + client.toString());
+
+        ClientEntity updatedClient = ClientEntity.builder()
+                .id(client.getId())
+                .firstName(updateClient.getFirstName())
+                .lastName(updateClient.getLastName())
+                .idNumber(updateClient.getIdNumber())
+                .mobileNumber(updateClient.getMobileNumber())
+                .physicalAddress(updateClient.getPhysicalAddress())
+                .build();
+
+        ClientEntity UpdateResponse = clientRepository.save(updatedClient);
+        return UpdateResponse;
+
     }
 }

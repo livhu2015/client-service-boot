@@ -2,10 +2,11 @@ package com.ovalleaf.client.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClientDto {
@@ -18,6 +19,7 @@ public class ClientDto {
 
     private String mobileNumber;
 
+    @Pattern(regexp = "\\d{10}[0|1]\\d{2}")
     @NotEmpty(message = "IdNumber is mandatory")
     private String idNumber;
 
