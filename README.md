@@ -19,3 +19,7 @@ Note: When validation fails an appropriate response should be provided.
 - Please provide a link to an open cloud Git repo. 
 - Please attempt to solve the problem using TDD. 
 - You are allowed to use any languages or frameworks of your choice.
+
+
+## Swagger UI
+http://localhost:8080/swagger-ui/index.html
