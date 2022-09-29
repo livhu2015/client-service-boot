@@ -1,6 +1,6 @@
-package com.ovalleaf.clientservice.repository;
+package com.ovalleaf.client.repository;
 
-import com.ovalleaf.clientservice.model.ClientEntity;
+import com.ovalleaf.client.model.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

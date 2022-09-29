@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.ovalleaf.client-service' is invalid and this project uses 'com.ovalleaf.clientservice' instead.
+* The original package name 'com.ovalleaf.client-service' is invalid and this project uses 'com.ovalleaf.client' instead.
 
 # Getting Started
 
